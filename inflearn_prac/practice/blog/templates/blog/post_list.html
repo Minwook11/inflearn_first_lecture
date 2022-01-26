@@ -1,0 +1,6 @@
+<h2> Post List </h2>
+
+{% for post in post_list %}
+	<h2>{{ post.title }}</h2>
+	{{ post.content }}
+{% endfor %}
