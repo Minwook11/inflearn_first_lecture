@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="ko">
+<head>
+	<meta charset="utf-8">
+	<title>Instagram Post List</title>
+</head>
+<body>
+	<form action="" method="get">
+		<input type="text" name="q" value="{{ q }}" />
+		<input type="submit" value="검색" />
+	</form>
+
+	<table>
+		<tbody>
+			{% for post in post_list %}
+				<tr>
+					<td>
+						{{ post.message }}
+					</td>
+					<td>
+						{% if post.image %}
+							<img src="{{ post.image.url }}" style="width:45px;" />
+						{% else %}
+							No Image
+						{% endif %}
+					</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+</body>
+</html>
