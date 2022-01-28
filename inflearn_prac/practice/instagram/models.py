@@ -8,6 +8,9 @@ class Post(models.Model):
 	is_public = models.BooleanField(default=False)
 	created_at = models.DateTimeField(auto_now_add=True)
 	updated_at = models.DateTimeField(auto_now=True)
+	
+	class Meta:
+		ordering = ['-id']	# 기본 정렬 지정, ID의 역순 - 즉, 최신 글부터
 
 	# JAVA의 toString과 같은 역할의 함수
 	def __str__(self):
