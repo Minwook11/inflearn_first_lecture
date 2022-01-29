@@ -7,6 +7,7 @@ class Post(models.Model):
 	# ImageField는 pillow 라이브러리 dependency 존재, upload_to 옵션을 통해서 settings의 MEDIA_ROOT와 조합하여 파일이 저장될 위치를 지정 가능함
 	# upload_to에서 시간관련 키워드를 사용해서 원하는 시간 단위로 저장 파일을 구분할 수 있다.
 	image = models.ImageField(blank=True, upload_to='instagram/image/%Y%m%d')
+	tag_set = models.ManyToManyField('Tag', blank=True)	# 동작 및 목적에 따라 blank 옵션 True/False
 	is_public = models.BooleanField(default=False)
 	created_at = models.DateTimeField(auto_now_add=True)
 	updated_at = models.DateTimeField(auto_now=True)
@@ -32,3 +33,7 @@ class Comment(models.Model):
 	message = models.TextField()
 	created_at = models.DateTimeField(auto_now_add=True)
 	updated_at = models.DateTimeField(auto_now=True)
+
+class Tag(models.Model):
+	name = models.CharField(max_length=50, unique=True)
+#	post_set = ManyToManyField(Post)

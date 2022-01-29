@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.utils.safestring import mark_safe
 
-from .models import Post, Comment
+from .models import Post, Comment, Tag
 
 @admin.register(Post)
 class PostAdmin(admin.ModelAdmin):
@@ -27,3 +27,7 @@ class PostAdmin(admin.ModelAdmin):
 @admin.register(Comment)
 class CommentAdmin(admin.ModelAdmin):
 	list_display = ['id', 'post', 'message', 'created_at', 'updated_at']
+
+@admin.register(Tag)
+class TagAdmin(admin.ModelAdmin):
+	pass
