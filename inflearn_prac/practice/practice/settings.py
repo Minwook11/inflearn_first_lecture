@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+	'debug_toolbar',
 	'corsheaders',
 	'django_extensions',
 	'blog',
@@ -47,6 +48,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+	'debug_toolbar.middleware.DebugToolbarMiddleware',
 	'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -125,6 +127,9 @@ STATIC_URL = '/static/'
 # Media files
 MEDIA_URL = '/media/'	# 미디어 파일에 접근할 때 활용
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')	# 미디어 파일을 저장할 때 활용
+
+# Django Debug Toolbar setting
+INTERNAL_IPS = ['127.0.0.1']
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
