@@ -286,3 +286,6 @@ pip-selfcheck.json
 # End of https://www.toptal.com/developers/gitignore/api/macos,django,python
 
 setting_secrets.py
+
+#Vim Editor
+*.swp
