@@ -22,3 +22,9 @@ def post_detail(request, id):
 	response.write('Hello World')
 
 	return response
+
+def archives_year(request, year):
+	response = HttpResponse()
+	response.write('{} Year Archives'.format(year))
+
+	return response
