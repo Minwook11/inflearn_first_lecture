@@ -1,4 +1,4 @@
-from django.views.generic import ListView, DetailView
+from django.views.generic import ListView, DetailView, ArchiveIndexView, YearArchiveView
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
@@ -50,8 +50,13 @@ class PostDetailView(DetailView):
 
 post_detail = PostDetailView.as_view(model=Post, pk_url_kwarg='id')
 
-def archives_year(request, year):
-	response = HttpResponse()
-	response.write('{} Year Archives'.format(year))
+#def archives_year(request, year):
+#	response = HttpResponse()
+#	response.write('{} Year Archives'.format(year))
+#
+#	return response
 
-	return response
+# Django의 기본 CBV중 Generic date views를 실습 -- ArchiveIndexView, YearArchiveView만 수행
+post_archive = ArchiveIndexView.as_view(model=Post, date_field='created_at')
+
+post_archive_year = YearArchiveView.as_view(model=Post, date_field='created_at', make_object_list=True)
