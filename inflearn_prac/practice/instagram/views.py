@@ -1,12 +1,24 @@
 from django.views.generic import ListView, DetailView
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.utils.decorators import method_decorator
 
 from .models import Post
 
 # Django에서 기본 제공하는 ListView, 아래 Views와 차이점은 검색 안됨
 # paginate_by 옵션을 통해서 기본 지원되는 페이징 기능 실습
-post_list = ListView.as_view(model = Post, paginate_by=10)
+# FBV에 데코레이터 적용하기 -- login_decorator
+#post_list = login_decorator(ListView.as_view(model = Post, paginate_by=10))
+
+# Class에 직접 데코레이터를 적용하는 방식 -- @키워드를 사용하거나, 해당되는 Mixin을 상속 시키는 방식이 있다.
+#@method_decorator(login_required, name='dispatch')
+class PostListView(LoginRequiredMixin, ListView):
+	model = Post
+	paginate_by = 10
+
+post_list = PostListView.as_view()
 
 #def post_list(request):
 #	query_set = Post.objects.all()
