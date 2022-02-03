@@ -17,8 +17,15 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf.urls.static import static
 from django.conf import settings
+from django.views.generic import TemplateView, RedirectView
 
 urlpatterns = [
+#	TemplateView 사용 예제
+#	path('', TemplateView.as_view(template_name = 'root.html'), name='root'),
+#	RedirectView 사용 예제
+#	path('', RedirectView.as_view(url = '/instagram/'), name='root'),
+#	RedirectView 사용 예제 -- Pattern Name 사용 예제, 이 방법을 사용하는 걸 추천한다고 함
+	path('', RedirectView.as_view(pattern_name='instagram:post_list'), name='root'),
     path('admin/', admin.site.urls),
 	path('blog/', include('blog.urls')),
 	path('instagram/', include('instagram.urls')),

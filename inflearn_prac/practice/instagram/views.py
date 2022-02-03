@@ -1,5 +1,5 @@
-from django.views.generic import ListView
-from django.shortcuts import render
+from django.views.generic import ListView, DetailView
+from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse
 
 from .models import Post
@@ -17,11 +17,12 @@ post_list = ListView.as_view(model = Post)	# Django에서 기본 제공하는 Li
 #	})
 
 # Views의 인자 중 URL에서 읽어오는 인자를 URL Captured Values라고 말함
-def post_detail(request, id):
-	response = HttpResponse()
-	response.write('Hello World')
-
-	return response
+#def post_detail(request: HttpResponse, id: int) -> HttpResponse:
+#	post = get_object_or_404(Post, id = id)
+#	return render(request, 'instagram/post_detail.html', {
+#			'post' : post,
+#		})
+post_detail = DetailView.as_view(model=Post, pk_url_kwarg='id')
 
 def archives_year(request, year):
 	response = HttpResponse()
