@@ -43,6 +43,7 @@ INSTALLED_APPS = [
 	'debug_toolbar',
 	'corsheaders',
 	'django_extensions',
+	'bootstrap4',
 	'blog',
 	'instagram',
 	'accounts',

@@ -4,7 +4,9 @@ from django.http import HttpResponse
 
 from .models import Post
 
-post_list = ListView.as_view(model = Post)	# Django에서 기본 제공하는 ListView, 아래 Views와 차이점은 검색이 안됨
+# Django에서 기본 제공하는 ListView, 아래 Views와 차이점은 검색 안됨
+# paginate_by 옵션을 통해서 기본 지원되는 페이징 기능 실습
+post_list = ListView.as_view(model = Post, paginate_by=10)
 
 #def post_list(request):
 #	query_set = Post.objects.all()
@@ -22,7 +24,19 @@ post_list = ListView.as_view(model = Post)	# Django에서 기본 제공하는 Li
 #	return render(request, 'instagram/post_detail.html', {
 #			'post' : post,
 #		})
-post_detail = DetailView.as_view(model=Post, pk_url_kwarg='id')
+
+class PostDetailView(DetailView):
+	model = Post
+#	qs = Post.objects.filter(is_public = True)
+
+#	get_queryset 오버라이딩 진행 - 로그인 한 사용자의 public란 포스팅에 대한 데이터 획득 로직
+	def get_queryset(self):
+		qs = super().get_queryset()
+		if not self.request.user.is_authenticated:
+			qs = qs.filter(is_public=True)
+		return qs
+
+post_detail = PostDetailView.as_view(model=Post, pk_url_kwarg='id')
 
 def archives_year(request, year):
 	response = HttpResponse()
