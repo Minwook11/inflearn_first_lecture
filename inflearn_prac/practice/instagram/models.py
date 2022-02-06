@@ -1,5 +1,6 @@
 from django.conf import settings
 from django.db import models
+from django.urls import reverse
 
 class Post(models.Model):
 	author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
@@ -14,6 +15,10 @@ class Post(models.Model):
 	
 	class Meta:
 		ordering = ['-id']	# 기본 정렬 지정, ID의 역순 - 즉, 최신 글부터
+
+	# URL Reverse 사용을 위한 Wrapper 메소드 구현
+	def get_absolute_url(self):
+		return reverse('instagram:post_detail', args=[self.pk])
 
 	# JAVA의 toString과 같은 역할의 함수
 	def __str__(self):
