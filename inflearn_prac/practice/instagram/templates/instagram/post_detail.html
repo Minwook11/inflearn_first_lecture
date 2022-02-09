@@ -11,9 +11,12 @@
 		<img src="{{ post.image.url }}"/>
 	{% endif %}
 
-	{{ post.message }}
+	{{ post.message|linebreaks }}
 	<hr/>
 	<a href="{% url 'instagram:post_list' %}" class="btn btn-primary">
 		List
+	</a>
+	<a href="{% url 'instagram:post_edit' post.pk %}" class="btn btn-info">
+		Edit
 	</a>
 {% endblock content %}

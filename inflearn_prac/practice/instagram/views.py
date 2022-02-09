@@ -4,19 +4,45 @@ from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.utils.decorators import method_decorator
+from django.contrib import messages
 
 from .models import Post
 from .forms import PostForm
 
 
+# 새로운 포스팅 작성 기능을 Model Form을 사용해서 구현
+@login_required
 def post_new(request):
+	if request.method == 'POST':
+		form = PostForm(request.POST, request.FILES)
+		if form.is_valid():
+			# 현재 Form에서 author 필드를 다루지 않기 때문에 commit옵션 False를 활용
+			post = form.save(commit=False)
+			post.author = request.user
+			post.save()
+			return redirect(post)
+	else:
+		form = PostForm()
+
+	return render(request, 'instagram/post_form.html', {'form' : form,})
+
+# 포스팅 수정 기능을 Model Form을 사용해서 구현, 로그인 필요는 장식자 사용으로 적용
+@login_required
+def post_edit(request, id):
+	post = get_object_or_404(Post, id = id)
+	
+# 작성자 Check 로직 --> 이를 장식자화 해보는 것도 좋은 방법, 다른 경우도 
+	if post.author != request.user:
+		messages.error(request, 'Only Author can edit')
+		return redirect(post)
+
 	if request.method == 'POST':
 		form = PostForm(request.POST, request.FILES)
 		if form.is_valid():
 			post = form.save()
 			return redirect(post)
 	else:
-		form = PostForm()
+		form = PostForm(instance = post)
 
 	return render(request, 'instagram/post_form.html', {'form' : form,})
 
