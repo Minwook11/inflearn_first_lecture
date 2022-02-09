@@ -1,10 +1,13 @@
 from django.conf import settings
+from django.core.validators import MinLengthValidator
 from django.db import models
 from django.urls import reverse
 
 class Post(models.Model):
 	author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-	message = models.TextField()
+	message = models.TextField(
+			validators=[MinLengthValidator(10)]
+	)
 	# ImageField는 pillow 라이브러리 dependency 존재, upload_to 옵션을 통해서 settings의 MEDIA_ROOT와 조합하여 파일이 저장될 위치를 지정 가능함
 	# upload_to에서 시간관련 키워드를 사용해서 원하는 시간 단위로 저장 파일을 구분할 수 있다.
 	image = models.ImageField(blank=True, upload_to='instagram/image/%Y%m%d')

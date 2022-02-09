@@ -10,6 +10,10 @@
 		<input type="text" name="q" value="{{ q }}" />
 		<input type="submit" value="검색" />
 	</form>
+	
+	<a href="{% url 'instagram:post_new' %}" class="btn btn-primary btn-block mt-3 mb-3">
+		New Posting
+	</a>
 
 	<table class="table table-bordered table-hover">
 		<tbody>

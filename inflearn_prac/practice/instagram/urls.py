@@ -11,6 +11,7 @@ register_converter(DayConverter, 'day')
 app_name = 'instagram'
 
 urlpatterns = [
+	path('new/', views.post_new, name='post_new'),
 #	Reverse Name 지정 후 RedirectView를 통해서 테스트 진행
 	path('', views.post_list, name='post_list'),
 	path('<int:id>/', views.post_detail, name='post_detail'),
