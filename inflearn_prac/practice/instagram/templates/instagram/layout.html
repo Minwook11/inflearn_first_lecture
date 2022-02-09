@@ -1,4 +1,4 @@
-{% load static %}
+{% load bootstrap4 static %}
 
 <!doctype html>
 <html lang="ko">
@@ -43,15 +43,19 @@
 				</div>
 			</li>
 			</ul>
-			<form class="form-inline my-2 my-lg-0">
-			<input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
-			<button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
-			</form>
 		</div>
 	</nav>
 <div class='container'>
 	<div class='row'>
 		<div class='col-sm-12'>
+{#			{% bootstrap_messages %}#}
+
+			{% for message in messages %}
+				<div class="alert alert-{{ message.tags }}">
+					{{ message.message }}
+				</div>
+			{% endfor %}
+
 			{% block content %}
 			{% endblock content %}
 			<hr/>

@@ -170,3 +170,10 @@ CORS_ALLOW_HEADERS = (
 	'x-csrftoken', 
 	'x-requested-with' 
 )
+
+from django.contrib.messages import constants as messages_constants
+
+MESSAGE_TAGS = {
+	messages_constants.DEBUG : 'secondary',
+	messages_constants.ERROR : 'danger',
+}
