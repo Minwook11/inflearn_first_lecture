@@ -54,6 +54,18 @@ def post_edit(request, id):
 			'post' : post,
 		})
 
+# 삭제 기능을 구현
+@login_required
+def post_delete(request, id):
+	post = get_object_or_404(Post, id = id)
+	if request.method == 'POST':
+		post.delete()
+		messages.success(request, 'Posting was successfully deleted')
+		return redirect('instagram:post_list')
+	return render(request, 'instagram/post_confirm_delete.html', {
+			'post' : post
+		})
+
 # Django에서 기본 제공하는 ListView, 아래 Views와 차이점은 검색 안됨
 # paginate_by 옵션을 통해서 기본 지원되는 페이징 기능 실습
 # FBV에 데코레이터 적용하기 -- login_decorator

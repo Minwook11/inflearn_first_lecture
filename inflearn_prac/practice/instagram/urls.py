@@ -16,6 +16,7 @@ urlpatterns = [
 	path('', views.post_list, name='post_list'),
 	path('<int:id>/', views.post_detail, name='post_detail'),
 	path('<int:id>/edit/', views.post_edit, name='post_edit'),
+	path('<int:id>/delete/', views.post_delete, name='post_delete'),
 #	re_path(r'(?P<id>\d+)/$', views.post_detail),	# 정규 표현식 사용례, 위와 동일하게 작동
 #	path('archives/<int:year>/', views.archives_year),
 #	re_path(r'archives/(?P<year>\d+)/', views.archives_year),

@@ -19,4 +19,7 @@
 	<a href="{% url 'instagram:post_edit' post.pk %}" class="btn btn-info">
 		Edit
 	</a>
+	<a href="{% url 'instagram:post_delete' post.pk %}" class="btn btn-secondary">
+		Delete
+	</a>
 {% endblock content %}
