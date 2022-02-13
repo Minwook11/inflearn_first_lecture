@@ -36,3 +36,8 @@ def profile_edit(request):
 		{'form' : form
 	})
 
+def signup(request):
+	pass
+
+def logout(request):
+	pass
