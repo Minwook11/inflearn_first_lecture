@@ -33,14 +33,14 @@
 					<a class="nav-link" href="{% url 'signup' %}">Sign Up</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" href="{% url 'login' %}">Log In</a>
+					<a class="nav-link" href="{% url 'login' %}?next{{ request.get_full_path }}">Log In</a>
 				</li>
 			{% else %}
 				<li class="nav-item">
 					<a class="nav-link" href="{% url 'profile' %}">Profile</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" href="{% url 'logout' %}">Log Out</a>
+					<a class="nav-link" href="{% url 'logout' %}?next{{ request.get_full_path }}">Log Out</a>
 				</li>
 			{% endif %}
 			</ul>

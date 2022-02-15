@@ -13,6 +13,8 @@ import os
 
 from pathlib import Path
 
+from django.urls import reverse_lazy
+
 import setting_secrets
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -109,6 +111,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+LOGOUT_REDIRECT_URL = reverse_lazy('login')
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
