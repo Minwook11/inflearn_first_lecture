@@ -1,13 +1,37 @@
 from django.shortcuts import render
+
+from rest_framework.decorators import api_view
+
+from rest_framework.response import Response
+from rest_framework.views import APIView
 from rest_framework.viewsets import ModelViewSet
 from rest_framework import generics
 
 from .serializers import PostSerializer
 from .models import Post
 
-class PublicPostListViewSet(generics.ListAPIView):
-	queryset = Post.objects.filter(is_public=True)
-	serializer_class = PostSerializer
+#class PublicPostListView(generics.ListAPIView):
+#	queryset = Post.objects.filter(is_public=True)
+#	serializer_class = PostSerializer
+
+	# CBV 형태로 DRF의 Views 만들기 -- APIView 상속
+#class PublicPostListView(APIView):
+#	def get(self, request):
+#		qs = Post.objects.filter(is_public=True)
+#		serializer = PostSerializer(qs, many=True)
+#
+#		return Response(serializer.data)
+#
+#public_post_list = PublicPostListView.as_view()
+
+	# FBV 형태로 DRF의 Views 만들기 -- api_view() 데코레이터 사용
+@api_view(['GET'])
+def public_post_list(request):
+	if request.method == 'GET':
+		qs = Post.objects.filter(is_public=True)
+		serializer = PostSerializer(qs, many=True)
+
+		return Response(serializer.data)
 
 class PostViewSet(ModelViewSet):
 	queryset = Post.objects.all()

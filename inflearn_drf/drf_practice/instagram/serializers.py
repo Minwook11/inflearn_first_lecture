@@ -22,6 +22,7 @@ class PostSerializer(serializers.ModelSerializer):
 			'author',
 #			'username',
 #			'email',
+			'is_public',
 			'message',
 			'created_at',
 			'updated_at'
