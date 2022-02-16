@@ -1,7 +1,13 @@
 from django.shortcuts import render
 from rest_framework.viewsets import ModelViewSet
+from rest_framework import generics
+
 from .serializers import PostSerializer
 from .models import Post
+
+class PublicPostListViewSet(generics.ListAPIView):
+	queryset = Post.objects.filter(is_public=True)
+	serializer_class = PostSerializer
 
 class PostViewSet(ModelViewSet):
 	queryset = Post.objects.all()
