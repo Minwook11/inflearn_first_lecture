@@ -1,6 +1,6 @@
 from django.shortcuts import render
 
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, action
 
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -33,9 +33,32 @@ def public_post_list(request):
 
 		return Response(serializer.data)
 
+
+# ViewSet에 새로운 endpoint 추가하기
 class PostViewSet(ModelViewSet):
 	queryset = Post.objects.all()
 	serializer_class = PostSerializer
+
+	# detail값의 구분은 False라면 컬렉션/목록 요청, True라면 인스턴스/세부 정보 요청으로 구분됨
+	@action(detail=False, methods=['GET'])
+	def public(self, request):
+		qs = self.queryset.filter(is_public=True)
+		serializer = self.get_serializer(qs, many=True)
+
+		return Response(serializer.data)
+
+	@action(detail=True, methods=['PATCH'])
+	def invert_public(self, request, pk):
+		instance = self.get_object()
+		if instance.is_public:
+			instance.is_public=False
+		else:
+			instance.is_public=True
+
+		instance.save()
+		serializer = self.get_serializer(instance)
+
+		return Response(serializer.data)
 
 	# Client에서 보내는 reqeust의 인코딩에 따라서 구성이 달라지는 것을 확인할 수 있는 dispatch 메소드 오버라이딩
 #	def dispatch(self, request, *args, **kwargs):
