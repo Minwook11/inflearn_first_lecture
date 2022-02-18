@@ -6,6 +6,8 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.viewsets import ModelViewSet
 from rest_framework import generics
+from rest_framework.generics import RetrieveAPIView
+from rest_framework.renderers import TemplateHTMLRenderer
 
 from .serializers import PostSerializer
 from .models import Post
@@ -65,3 +67,14 @@ class PostViewSet(ModelViewSet):
 #		print("reqeust.body : ", request.body)
 #		print("reqeust.POST : ", request.POST)
 #		return super().dispatch(request, *args, **kwargs)
+
+class PostDetailAPIView(RetrieveAPIView):
+	queryset = Post.objects.all()
+	renderer_classes = [TemplateHTMLRenderer]
+	template_name = 'instagram/post_detail.html'
+
+	def get(self, request, *args, **kwargs):
+		post = self.get_object()
+		return Response({
+				'post' : post,
+			})
