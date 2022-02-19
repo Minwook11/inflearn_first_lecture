@@ -41,6 +41,12 @@ class PostViewSet(ModelViewSet):
 	queryset = Post.objects.all()
 	serializer_class = PostSerializer
 
+	# DOTO: Author관련하여 임시로 로그인이 되어 있다는 가정하에 진행됨
+	def perform_create(self, serializer):
+		author = self.request.user	# User or AnonymousUser 객체 둘 중 하나
+		ip = self.request.META['REMOTE_ADDR']
+		serializer.save(ip=ip, author=author)
+
 	# detail값의 구분은 False라면 컬렉션/목록 요청, True라면 인스턴스/세부 정보 요청으로 구분됨
 	@action(detail=False, methods=['GET'])
 	def public(self, request):
