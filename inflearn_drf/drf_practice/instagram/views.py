@@ -8,8 +8,10 @@ from rest_framework.viewsets import ModelViewSet
 from rest_framework import generics
 from rest_framework.generics import RetrieveAPIView
 from rest_framework.renderers import TemplateHTMLRenderer
+from rest_framework.permissions import IsAuthenticated
 
 from .serializers import PostSerializer
+from .permissions import IsAuthorOrReadonly
 from .models import Post
 
 #class PublicPostListView(generics.ListAPIView):
@@ -40,8 +42,8 @@ def public_post_list(request):
 class PostViewSet(ModelViewSet):
 	queryset = Post.objects.all()
 	serializer_class = PostSerializer
+	permission_classes = [IsAuthenticated, IsAuthorOrReadonly]
 
-	# DOTO: Author관련하여 임시로 로그인이 되어 있다는 가정하에 진행됨
 	def perform_create(self, serializer):
 		author = self.request.user	# User or AnonymousUser 객체 둘 중 하나
 		ip = self.request.META['REMOTE_ADDR']
