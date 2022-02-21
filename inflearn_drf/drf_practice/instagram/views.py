@@ -9,6 +9,7 @@ from rest_framework import generics
 from rest_framework.generics import RetrieveAPIView
 from rest_framework.renderers import TemplateHTMLRenderer
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.filters import SearchFilter, OrderingFilter
 
 from .serializers import PostSerializer
 from .permissions import IsAuthorOrReadonly
@@ -43,6 +44,9 @@ class PostViewSet(ModelViewSet):
 	queryset = Post.objects.all()
 	serializer_class = PostSerializer
 	permission_classes = [IsAuthenticated, IsAuthorOrReadonly]
+	filter_backends = [SearchFilter, OrderingFilter]
+	search_fields = ['=message']
+	ordering =['-pk']
 
 	def perform_create(self, serializer):
 		author = self.request.user	# User or AnonymousUser 객체 둘 중 하나
